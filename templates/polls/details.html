@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .error {color:red;}
+</style>
+it was published recently? - {{ questions.was_published_recently}}
+<br><br>
+<div>
+    {{ questions.question_text }}
+</div>
+<div>
+    Odpowiedzi:
+    {% if error_message %}
+    <div class="error">{{ error_message }}</div>
+    {%endif%}
+        {% if questions.choice_set.all %}
+        <form action="{% url 'polls:vote' questions.id %}" method="post"> {% csrf_token %}
+
+            {% for choice in questions.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{ choice.id }}">
+            <label for="choice{{forloop.counter}}">{{ choice.choice_text}}</label><br>
+            {% endfor %}
+
+            <input type="submit" value="Vote">
+        </form>
+        {% else %}
+            <p>Brak wyboru</p>
+        {% endif %}
+
+</div>
+<br><br>
+
+<a href="{% url 'polls:list' %}">powrót do listy</a>
+{% endblock %}
