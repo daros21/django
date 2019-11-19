@@ -11,7 +11,8 @@ from django.template import loader
 
 
 def index(request):
-    return HttpResponse("welcome on my index page")
+    context = {}
+    return render(request, 'index.html', {})
 
 
 def hello(request):

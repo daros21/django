@@ -17,11 +17,12 @@ class Question(models.Model):
     pub_date = models.DateTimeField(verbose_name="publication date")
     is_active = models.BooleanField(default=True)
     level = models.CharField(max_length=200, choices=LEVEL_CHOICES, null=True, blank=False)
+    image = models.ImageField(null=True, blank=True, upload_to="question/images/%Y/%m/%d")
+
 
     def was_published_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.pub_date <= now
-
 
     def __str__(self):
         return self.question_text
