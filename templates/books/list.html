@@ -1,20 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if book %}
+{% for book in books %}
 
-    {% for b in book %}
-    <div class="col-md-6">
-        <a href="{% url 'books:details' b.id %}">{{ b.title }}</a>
-    </div>
-    <div class=""col-md=-3"> cena: {{b.price}}</div>
+<div class="row">
+    <div class="col-md-1"><a href="{% url 'books:details' book.id %}">{{book.id}}</a></div>
+    <div class="col-md-7"><a href="{% url 'books:details' book.id %}">{{book.title}}</a></div>
+    <div class="col-md-2">cena: {{book.price}} PLN</div>
+    <div class="col-md-2">rating: {{book.rating|floatformat:"0"}}/100</div>
+    <hr class="mt-5 mb-5">
+</div>
 
-    {% endfor %}
+{% endfor %}
 
-{% else %}
-    No books
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
 
-{% endif %}
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
 
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 
 {% endblock %}

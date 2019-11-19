@@ -1,25 +1,33 @@
 {% extends 'base.html' %}
 {% load i18n %}
-
+{% load bootstrap4 %}
 {% block content %}
-
-<style>
-    .error {color:red;}
-</style>
-
-<br><br>
 <div class="row">
-    <div class="col-2-md font-weight-bold">{% blocktrans %} title - {%endblocktrans%}{{ book.title|title }}</div>
+    <div class="col-md-2 font-weight-bold">{% blocktrans %}Title{%endblocktrans%}</div>
+    <div class="col-md-10 ">{{book.title}}</div>
 </div>
 <div class="row">
-    <div class="col-2-md">{% blocktrans %} rating - {%endblocktrans%}{{ book.rating }}/10</div>
-</div>
+    <div class="col-md-6 font-weight-bold">Author: {{book.authors_text}}</div>
+    <div class="col-md-2"></div>
+    <div class="col-md-1 font-weight-bold">Rating:</div>
+    <div class="col-md-1">{{book.rating}}</div>
+    <div class="col-md-1 font-weight-bold">Price:</div>
+    <div class="col-md-1">{{book.price}}</div>
 </div>
 <div class="row">
-    <div class="col-6-md">{% blocktrans %} authors: {%endblocktrans%}{{ book.authors_text }}</div>
+    <div class="col-md-12">{{book.description}}</div>
 </div>
 
-<br><br>
+<div class="row">
+    <!-- Formularz komentarza -->
 
+    <div class="col-md-12">
+        <form action="" method="POST" id="commentform">
+            {% bootstrap_form form %}
+
+        </form>
+
+    </div>
+</div>
 
 {% endblock %}

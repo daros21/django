@@ -1,12 +1,10 @@
 from django.urls import path
 
-from books.views import book_list, book_detail
-from polls import views
-from polls.views import hello, questions_list, detail, results, vote
+from books.views import books_list, book_details, BookList, BookDetail
 
 app_name = "books"
 urlpatterns = [
-    # /books/
-    path("", book_list, name="list"),
-    path("<int:book_id>", book_detail, name="details")
+    path("", BookList.as_view(), name="list"),
+    path("<int:pk>", book_details, name="details"),
+    path("generic/<int:pk>", BookDetail.as_view(), name="details_generic")
 ]

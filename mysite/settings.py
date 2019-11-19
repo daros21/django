@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'bootstrap4',
     # 'polls',
     'polls.apps.PollsConfig',
     'books.apps.BooksConfig',
