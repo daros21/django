@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     # 'polls',
-    'polls.apps.PollsConfig'
+    'polls.apps.PollsConfig',
+    'books.apps.BooksConfig',
 
 ]
 
