@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if book %}
+
+    {% for b in book %}
+    <div class="col-md-6">
+        <a href="{% url 'books:details' b.id %}">{{ b.title }}</a>
+    </div>
+    <div class=""col-md=-3"> cena: {{b.price}}</div>
+
+    {% endfor %}
+
+{% else %}
+    No books
+
+{% endif %}
+
+
+{% endblock %}

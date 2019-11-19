@@ -8,7 +8,7 @@ urlpatterns = [
     # /polls/
     path("", questions_list, name="list"),
     # /polls/5/
-    path("<int:question_id>/", detail, name="detail"),
+    path("<int:question_id>", detail, name="detail"),
     # /polls/5/results
     path("<int:question_id>/results/", results, name="results"),
     # /polls/5/vote
