@@ -19,14 +19,23 @@
 </div>
 
 <div class="row">
+    <p>komentarze: </p><br>
+    {% for comment in book.comment_set.all%}
+        <div> {{ comment.name }}: </div> <div> {{ comment.text }}</div>
+    <br>
+    {% endfor%}
+</div>
+
+<div class="row">
     <!-- Formularz komentarza -->
 
     <div class="col-md-12">
-        <form action="" method="POST" id="commentform">
+        <form action="{% url 'books:comment' book.id %}" method="POST" id="commentform">
+            {% csrf_token %}
             {% bootstrap_form form %}
 
         </form>
-
+        <button type="submit" form="commentform">Dodaj</button>
     </div>
 </div>
 
