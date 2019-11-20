@@ -1,43 +1,32 @@
 
-from rest_framework import mixins
+from rest_framework import mixins, permissions
 from rest_framework import generics
 
-from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer
+from snippets.models import Snippet, User
+from snippets.permissions import IsOwnerOrReadOnly
+from snippets.serializers import SnippetSerializer, UserSerializer
+
 
 # Create your views here.
 
-<<<<<<< HEAD
+
 class SnippetList(generics.ListAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticatedReadOnly]
+
+    def perform_create(self,serializer):
+        serializer.save(owner=self.request.user)
 
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
+    permission_classes = [permissions.IsAuthenticatedReadOnly, IsOwnerOrReadOnly]
 
-=======
-class SnippetList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-    def get(self,request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self,request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-class SnippetDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
-
-    def get(self,request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def put(self,request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
-
-    def delete(self,request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
-
->>>>>>> ec79545dfc669f7ad640c0a5a62b2247eac552e5
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

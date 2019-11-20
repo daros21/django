@@ -17,3 +17,23 @@ class Snippet(models.Model):
 
     class Meta:
         ordering = ['created']
+
+
+class User(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100, blank=True, default='')
+    code = models.TextField()
+
+
+    def safe(self, *args, **kwargs):
+        lexer = get_lexer_by_name(self.language)
+        linenos = 'table' if self.linenos else False
+        options = {'title': self.title} if self.title else {}
+        formatter = HtmlFormatter(
+            style = self.style,
+            linenos = linenos,
+            full = True,
+            **options
+        )
+        self.highlighted = highlight(self.code, lexer, formatter)
+        super(Snippet, self).save(*args, **kwargs)
