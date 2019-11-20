@@ -21,7 +21,7 @@ class SnippetList(generics.ListAPIView):
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
-    permission_classes = [permissions.IsAuthenticatedReadOnly, IsOwnerOrReaqdOnly]
+    permission_classes = [permissions.IsAuthenticatedReadOnly, IsOwnerOrReadOnly]
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
