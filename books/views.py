@@ -1,10 +1,11 @@
 import json
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.core.paginator import Paginator
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 
 # Create your views here.
 from django.urls import reverse
@@ -15,7 +16,7 @@ from django.views.generic import ListView, FormView, DetailView
 from books.forms import CommentForm
 from books.models import Book
 from openpyxl import Workbook
-from openpyxl.styles import Border, Font
+from openpyxl.styles import Font
 
 
 class BookList(ListView):
@@ -23,6 +24,7 @@ class BookList(ListView):
     context_object_name = 'books'
     template_name = 'books/list.html'
     paginate_by = 10
+
 
 class BookDetail(DetailView, FormView):
     model = Book
@@ -43,12 +45,17 @@ def books_list(request):
         books = json.loads(books)
         return JsonResponse(books, safe=False)
 
+    if format == "xml":
+        books = serializers.serialize('xml', books)
+        return HttpResponse(books, content_type='application/xhtml+xml')
+
+
     return render(
         request,
         "books/list.html",
         context={'books': books})
 
-
+@login_required
 def book_details(request, pk):
     book = Book.objects.get(pk=pk)
     form = CommentForm()
@@ -98,3 +105,4 @@ def books_to_excel(request):
     ws['D1'].font = font
     workbook.save(response)
     return response
+

@@ -159,3 +159,5 @@ CACHES = {
         "KEY_PREFIX": "example"
     }
 }
+
+LOGIN_REDIRECT_URL = '/'
