@@ -10,4 +10,4 @@ class Command(BaseCommand):
         keys = con.keys()
         print("liczniki: ")
         for k in keys:
-            print (k.decode(), " : ", con.get(k).decode())
+            print(k.decode(), " : ", con.get(k).decode())
