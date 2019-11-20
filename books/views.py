@@ -1,6 +1,9 @@
+import json
+
 from django.contrib import messages
+from django.core import serializers
 from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.shortcuts import render, render_to_response
 
 # Create your views here.
@@ -33,6 +36,13 @@ def books_list(request):
     page = request.GET.get('page')
     paginator = Paginator(books, 10)
     books = paginator.get_page(page)
+
+    format = request.GET.get('format')
+    if format == "json":
+        books = serializers.serialize('json', books)
+        books = json.loads(books)
+        return JsonResponse(books, safe=False)
+
     return render(
         request,
         "books/list.html",
