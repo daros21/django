@@ -41,3 +41,11 @@ class Comment(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     text = models.TextField()
+
+
+class Notification(models.Model):
+    note = models.TextField()
+
+    def __str__(self):
+        return self.note
+

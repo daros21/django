@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
+{% block notify %}
+{{ note }}
+{% endblock%}
+
+
 {% block content %}
+
 {% for book in books %}
 
 <div class="row">

@@ -33,9 +33,8 @@
         <form action="{% url 'books:comment' book.id %}" method="POST" id="commentform">
             {% csrf_token %}
             {% bootstrap_form form %}
-
+            <button type="submit" form="commentform">Dodaj</button>
         </form>
-        <button type="submit" form="commentform">Dodaj</button>
     </div>
 </div>
 

@@ -1,10 +1,13 @@
 from django.contrib import admin
+
+from books.models import Notification
 from .models import Question, Choice
 # Register your models here.
 
 class ChoiceInLine(admin.StackedInline):
     model = Choice
     fields = ['choice_text']
+    suit_classes = 'suit-tab suit-tab-questions'
 
 
 class AdminQuestion(admin.ModelAdmin):
@@ -13,11 +16,22 @@ class AdminQuestion(admin.ModelAdmin):
     list_filter = ['is_active']
 
     fieldsets = [
-        ('Glowne', {'fields': ['question_text', 'is_active']}),
-        ("daty", {'fields': ['pub_date', 'created', 'modified']}),
-        ("image", {'fields': ['image']}),
-        ("poziom trudnosci", {'fields': ['level']})
+        ('Glowne', {
+            'classes': ('suit-tab', 'suit-tab-general'),
+            'fields': ['question_text', 'is_active']}),
+        ("daty", {
+            'classes': ('suit-tab', 'suit-tab-dates'),
+            'fields': ['pub_date', 'created', 'modified']}),
+        ("image", {
+            'classes': ('suit-tab', 'suit-tab-images'),
+            'fields': ['image']}),
+        ("poziom trudnosci", {
+            'classes': ('suit-tab', 'suit-tab-other'),
+            'fields': ['level']})
     ]
+
+    suit_form_tabs = (('general', 'General'), ('dates', 'Dates'),
+                      ('images', 'Images'), ('other', 'Other'), ('questions', 'Questions'))
     inlines = [ChoiceInLine]
     readonly_fields = ['id', 'created', 'modified']
 
@@ -28,3 +42,5 @@ class AdminChoice(admin.ModelAdmin):
 admin.site.register(Question, AdminQuestion)
 
 admin.site.register(Choice,AdminChoice)
+
+admin.site.register(Notification)
