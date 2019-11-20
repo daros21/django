@@ -72,6 +72,9 @@ def books_to_excel(request):
     ws = workbook.active
 
     books = Book.objects.all()
+    page = request.GET.get('page')
+    paginator = Paginator(books, 10)
+    books = paginator.get_page(page)
 
     font = Font(name='Calibri', size = 14, bold = True, italic = False, vertAlign = None, underline = 'none', strike = False, color = 'FF000000')
 
