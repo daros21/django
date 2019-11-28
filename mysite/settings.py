@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     # 'polls',
     'polls.apps.PollsConfig',
     'books.apps.BooksConfig',
-    'rest_framework',
     'snippets.apps.SnippetsConfig',
 ]
 
